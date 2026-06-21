@@ -1,110 +1,87 @@
-# Drisha Trading Company (DTC) — E-commerce Platform
+# Tiny Scholars High School — CBSE K-10 School Website
 
-A full-stack, B2B/B2C hardware and home-solutions e-commerce web application built for **Drisha Trading Company (DTC)**, a Hyderabad-based supplier. Slogan: "Your Needs, Our Services."
+A premium, modern, and highly interactive school portal website built for **Tiny Scholars High School, Hyderabad**. Styled with an established institution aesthetic using a cohesive Deep Navy (`#1B2A4A`) and Warm Gold (`#E8A33D`) theme, the site is designed to serve parents, students, and administrators.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React 18 + Vite, TailwindCSS (v4), Framer Motion, React Router v6, Zustand (state), React Hook Form + Zod (validation)
-- **Backend:** Node.js + Express, REST API, JWT (access + refresh tokens)
-- **Database:** SQLite with Prisma ORM (zero-config, instant local run)
-- **Payment Integration:** Razorpay Test Mode SDK (with automated Simulated Mode fallback if keys are missing)
+- **Framework:** React 18 + Vite (fast build & dev cycles)
+- **Styling:** TailwindCSS (v4) with custom utility directives
+- **Animations:** Framer Motion (orchestrating timeline draws, staggered card slide-ins, and scroll-triggers)
+- **Icons:** Lucide React
+- **Routing:** React Router v6 (declarative routing with page transitions)
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-tour_website/                  # Root Frontend Directory
-├── backend/                   # Node.js + Express + Prisma Backend
-│   ├── prisma/                # SQLite database and Seed scripts
-│   │   ├── dev.db             # Local SQLite database (auto-generated)
-│   │   ├── schema.prisma      # Prisma Database models
-│   │   └── seed.js            # Seeding script (30 products, 2 default users)
-│   ├── server.js              # Express API Server
-│   ├── .env.example           # Environment template
-│   └── .env                   # Local Environment keys (JWT, Razorpay)
-├── src/                       # React frontend source files
-│   ├── components/            # Nav, Footer, Drawer, Cards, Guards
-│   ├── store/                 # Zustand state stores (auth, cart, toast)
-│   ├── utils/                 # API request utility
-│   ├── views/                 # Core page views (Home, Catalog, Checkout, Dashboards)
-│   └── App.jsx                # Route declarations & Framer Motion transitions
+tour_website/                  # Root project directory
+├── public/                    # Static public assets (logos, campus images)
+├── src/                       # React frontend source code
+│   ├── assets/                # Icons and vector graphics
+│   ├── components/            # Shared layouts (Navbar, Footer, Chatbot, BackButton)
+│   ├── views/                 # Core page views (Home, About, Academics, Admissions, Facilities, Gallery, News, Contact)
+│   ├── App.css                # Global boilerplate layout styles
+│   ├── App.jsx                # Router config & page transitions
+│   ├── index.css              # Tailwind configuration, theme variables & global styles
+│   └── main.jsx               # App entrypoint
+├── vite.config.js             # Vite compiler configuration
+├── tailwind.config.js         # Tailwind settings
 └── README.md                  # Instructions manual
 ```
 
 ---
 
+## ✨ Key Features & Interactive Animations
+
+All animations have been configured with Framer Motion viewports (`once: false`) so they run smoothly every time a user scrolls into view.
+
+1. **Academic Roadmap Timeline (Academics & Home)**:
+   - A horizontal (desktop) or vertical (mobile) neutral grey line draws from 0% to 100% and transitions to gold as it scrolls into view.
+   - Stage nodes (navy circles with gold borders and custom white icons) pop sequentially as the drawing line reaches them.
+   - Stage cards slide/fade up in perfect sync with their nodes.
+   - Clicking a card slides open a vertical curriculum details block (key subjects & highlights) with height/opacity transitions.
+
+2. **Why Choose Us Carousel**:
+   - Features a responsive, auto-rotating 3D Circular Card Wheel showing school highlights.
+   - Fully optimized for responsiveness: displays a single-card view on mobile with bottom indicator dots, fits snug on tablets, and renders in a full 3D layout on desktop.
+
+3. **Announcements Rows**:
+   - Notices stagger in from the left. The most recent notice is highlighted with a gold border, gold-accented background, and a pulsing gold `✦ New` badge.
+   - Click to expand notice details with an arrow rotation.
+
+4. **Parent Testimonials**:
+   - Auto-rotating testimonials slider that cycles every 4 seconds with clean crossfade animations.
+
+5. **Admissions Assistant Chatbot**:
+   - A bottom-right floating helper. Tapping options automatically shows response dialogues. Form fields auto-dismiss when alternative query routes are taken to keep the UI clean.
+
+---
+
 ## 🚀 Setup & Execution Instructions
 
-Run the application locally in minutes by executing the following steps.
+Follow these simple steps to run the website locally.
 
-### Step 1: Clone and Install Backend Dependencies
-Open your terminal and execute:
+### Step 1: Clone the repository and install packages
+Open your terminal in the project directory and install the dependencies:
 ```bash
-cd backend
 npm install
 ```
 
-### Step 2: Database Migration & Seeding
-Deploy the SQLite schema structures and seed the products:
-```bash
-# Deploys database migrations
-npx prisma migrate dev --name init
-
-# Seeds categories, 30 products, and 2 default accounts
-node prisma/seed.js
-```
-
-### Step 3: Run the Express Server
-Start the backend server on `http://localhost:5000`:
+### Step 2: Run the local development server
+Start the Vite local development server:
 ```bash
 npm run dev
 ```
+Open **[http://localhost:5173/](http://localhost:5173/)** in your browser to view the live site.
 
-### Step 4: Install Frontend Dependencies & Run
-Open a second terminal window in the root directory:
+### Step 3: Compile for production
+To check compilation validity or build the static output files under `/dist`:
 ```bash
-# Install frontend packages
-npm install
-
-# Start the Vite dev server on http://localhost:5173
-npm run dev
+npm run build
 ```
 
 ---
-
-## 🔐 Demo Credentials
-
-Use these seeded accounts to log in and review both user experiences:
-
-| Role | Email | Password | Purpose |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin@drishatrading.com` | `admin123` | Can CRUD products, edit order statuses, review sales metrics |
-| **Customer** | `customer@drishatrading.com` | `customer123` | Can add to cart, edit addresses, checkout, review order history |
-
----
-
-## 💳 Razorpay Test Mode & Simulation Sandbox
-
-DTC is equipped with a dual payment processing model:
-
-### 1. Simulated Mode (Zero Config - Default)
-If no Razorpay keys are configured in the `backend/.env` file, the checkout flow **automatically falls back to simulated payment**. You can click through checkout and payment verification immediately with no setup.
-
-### 2. Real Razorpay Test Mode Modal
-To see the official Razorpay Checkout popup:
-1. Sign up at [razorpay.com](https://razorpay.com) and switch the top-left toggle to **Test Mode**.
-2. Go to **Settings** → **API Keys** → Generate Test Key ID and Secret.
-3. Open `backend/.env` and enter these keys:
-   ```env
-   RAZORPAY_KEY_ID=rzp_test_xxxxxx
-   RAZORPAY_KEY_SECRET=yyyyyyyy
-   ```
-4. Restart the backend server. The checkout flow will now load the official Razorpay dialog popup.
-
-#### 🧪 Test Credentials to use during the checkout demo:
-- **Card Payments:** `4111 1111 1111 1111`, any future expiry date, any 3-digit CVV number.
-- **UPI Payments:** `success@razorpay` to simulate a successful UPI transaction.
-- **Netbanking:** Select any bank and click **Success**.
+*Tiny Scholars High School, Hyderabad. Shaping Minds, Building Character.*
